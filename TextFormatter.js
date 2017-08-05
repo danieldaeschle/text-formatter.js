@@ -42,13 +42,8 @@ document.onmouseup = document.onkeyup = (function() {
 });
 
 var changeSize = (function(increase) {
-    var fontSize = document.queryCommandValue("FontSize");
-    var value;
-    if (fontSize == '') {
-        value = 3 + parseInt(increase ? 1 : -1);
-    } else {
-        value = parseInt(fontSize) + parseInt(increase ? 1 : -1);
-    }
+    var fontSize = document.queryCommandValue("FontSize") || 3;
+    value = parseInt(fontSize) + parseInt(increase ? 1 : -1);
     document.execCommand('fontSize', false, value);
 });
 
