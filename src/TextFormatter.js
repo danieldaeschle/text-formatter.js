@@ -24,7 +24,7 @@ document.onselectionchange = (function(e) {
 document.onclick = (function(e) {
     var highlightTooltip = document.getElementById('highlightTooltip').outerHTML;
     if (highlightTooltip.indexOf(e.target.outerHTML) === -1 && isTextFormatterVisible) {
-        document.getElementById('highlightTooltip').style.display = 'none';
+        fadeOut(document.getElementById('highlightTooltip'), 200);
         clearTimeout(delayedVisibleSetter);
         isTextFormatterVisible = false;
     }
@@ -36,7 +36,7 @@ document.onmouseup = document.onkeyup = (function() {
         var highlightTooltip = document.getElementById('highlightTooltip');
         highlightTooltip.style.top = coords.y - 55 + 'px';
         highlightTooltip.style.left = coords.x - 50 + 'px';
-        highlightTooltip.style.display = 'block';
+        fadeIn(document.getElementById('highlightTooltip'), 200);
         delayedVisibleSetter = setTimeout(function() {
             isTextFormatterVisible = true;
         }, 200);
@@ -108,4 +108,17 @@ var getSelectionCoords = (function(win) {
         }
     }
     return { x: x, y: y };
+});
+
+var fadeIn = (function(el, duration, display) {
+    var s = el.style, step = 25/(duration || 300);
+    s.opacity = s.opacity || 0;
+    s.display = display || "block";
+    (function fade() { (s.opacity = parseFloat(s.opacity)+step) > 1 ? s.opacity = 1 : setTimeout(fade, 25); })();
+});
+
+var fadeOut = (function(el, duration) {
+    var s = el.style, step = 25/(duration || 300);
+    s.opacity = s.opacity || 1;
+    (function fade() { (s.opacity -= step) < 0 ? s.display = "none" : setTimeout(fade, 25); })();
 });
