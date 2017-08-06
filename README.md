@@ -1,6 +1,8 @@
 # TextFormatterJS
+### Descriptio
 Simple text formatter tooltip for HTML editors
 
+### Quickstart
 Download the files and copy ```text-formatter.min.js```, ```text-formatter.min.css``` from dist folder into your project source folder.
 Then you can add following to your ```<head></head>``` in your HTML file:
 ```
@@ -10,4 +12,11 @@ Then you can add following to your ```<head></head>``` in your HTML file:
 ```
 Set ```contenteditable="true"``` property to your HTML element which should be editable and showing the tooltip.
 
+### Screenshots
 ![alt text](https://raw.githubusercontent.com/danieldaeschle/TextFormatterJS/master/images/screenshot.png)
+
+### Authors
+* Daniel Däschle
+
+### License
+Code released under the [MIT License](LICENSE.md).
