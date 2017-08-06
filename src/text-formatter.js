@@ -42,8 +42,16 @@ document.onmouseup = document.onkeyup = (function() {
     if (textSelected) {
         var coords = getSelectionCoords();
         var highlightTooltip = document.getElementById('highlightTooltip');
-        highlightTooltip.style.top = coords.y - 55 + 'px';
-        highlightTooltip.style.left = coords.x - 50 + 'px';
+        if (coords.y > 60) {
+            highlightTooltip.style.top = coords.y - 55 + 'px';
+        } else {
+            highlightTooltip.style.top = coords.y + 25 + 'px';
+        }
+        if (coords.x < 55) {
+            highlightTooltip.style.left = 5 + 'px';
+        } else {
+            highlightTooltip.style.left = coords.x - 50 + 'px';
+        }
         fadeIn(document.getElementById('highlightTooltip'), 200);
         delayedVisibleSetter = setTimeout(function() {
             isTextFormatterVisible = true;
@@ -60,7 +68,6 @@ var changeSize = (function(increase) {
     value = parseInt(fontSize) + parseInt(increase ? 1 : -1);
     document.execCommand('fontSize', false, value);
 });
-
 
 /**
  * Returns the highlighteed/selected text
@@ -101,8 +108,10 @@ var getSelectionCoords = (function() {
                 if (rects.length > 0) {
                     rect = rects[0];
                 }
-                x = rect.left;
-                y = rect.top;
+                if (rect !== undefined) {
+                    x = rect.left;
+                    y = rect.top;
+                }
             }
             if (x === 0 && y === 0) {
                 var span = doc.createElement("span");
