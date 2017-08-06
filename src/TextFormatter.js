@@ -1,18 +1,20 @@
 var textSelected = false;
 var isTextFormatterVisible = false;
+var textFormatterElement = '<div id="highlightTooltip">'+
+                            '<button onclick="document.execCommand(\'bold\', false, null)"><i class="material-icons">format_bold</i></button>'+
+                            '<button onclick="document.execCommand(\'italic\', false, null)"><i class="material-icons">format_italic</i></button>'+
+                            '<button onclick="document.execCommand(\'underline\', false, null)"><i class="material-icons">format_underline</i></button>'+
+                            '<button onclick="changeSize(true)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_up</i></button>'+
+                            '<button onclick="changeSize(false)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_down</i></button>'+
+                            '</div>'
 
 window.onload = (function() {
-    var head = document.querySelector('head')
-    if (head.innerHTML.indexOf('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">') == -1) {
-        head.innerHTML += '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">';
-    }
-    head.innerHTML += '<style>button {cursor: pointer; background-color: transparent; border: 0; padding: 2px; color: white; border-radius: 2px;}button:hover {background-color: #616161}#highlightTooltip {box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3); border-radius: 4px; position: absolute; display: none; background-color: #212121; padding: 8px;}</style>';
-    document.querySelector('body').innerHTML += '<div id="highlightTooltip"><button onclick="document.execCommand(\'bold\', false, null)"><i class="material-icons">format_bold</i></button><button onclick="document.execCommand(\'italic\', false, null)"><i class="material-icons">format_italic</i></button><button onclick="document.execCommand(\'underline\', false, null)"><i class="material-icons">format_underline</i></button><button onclick="changeSize(true)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_up</i></button><button onclick="changeSize(false)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_down</i></button></div>'
+    document.querySelector('body').innerHTML += textFormatterElement;
 });
 
 document.onselectionchange = (function(e) {
     var text = getSelectedText();
-    if (text != '') {
+    if (text !== '') {
         textSelected = true;
     } else {
         textSelected = false;
@@ -21,7 +23,7 @@ document.onselectionchange = (function(e) {
 
 document.onclick = (function(e) {
     var highlightTooltip = document.getElementById('highlightTooltip').outerHTML;
-    if (highlightTooltip.indexOf(e.target.outerHTML) == -1 && isTextFormatterVisible) {
+    if (highlightTooltip.indexOf(e.target.outerHTML) === -1 && isTextFormatterVisible) {
         document.getElementById('highlightTooltip').style.display = 'none';
         clearTimeout(delayedVisibleSetter);
         isTextFormatterVisible = false;
@@ -58,7 +60,7 @@ var getElementIndex = (function(node) {
 var getSelectedText = (function() {
     if (window.getSelection) {
         var selection = window.getSelection();
-        if (selection.anchorNode && selection.anchorNode.parentNode.isContentEditable != false) {
+        if (selection.anchorNode && selection.anchorNode.parentNode.isContentEditable !== false) {
             return selection.toString();
         }
     }
@@ -71,7 +73,7 @@ var getSelectionCoords = (function(win) {
     var sel = doc.selection, range, rects, rect;
     var x = 0, y = 0;
     if (sel) {
-        if (sel.type != "Control") {
+        if (sel.type !== "Control") {
             range = sel.createRange();
             range.collapse(true);
             x = range.boundingLeft;
@@ -90,7 +92,7 @@ var getSelectionCoords = (function(win) {
                 x = rect.left;
                 y = rect.top;
             }
-            if (x == 0 && y == 0) {
+            if (x === 0 && y === 0) {
                 var span = doc.createElement("span");
                 if (span.getClientRects) {
                     span.appendChild( doc.createTextNode("\u200b") );
