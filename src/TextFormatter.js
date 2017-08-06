@@ -14,11 +14,7 @@ window.onload = (function() {
 
 document.onselectionchange = (function(e) {
     var text = getSelectedText();
-    if (text !== '') {
-        textSelected = true;
-    } else {
-        textSelected = false;
-    }
+    textSelected = true ? text !== '' : false;
 });
 
 document.onclick = (function(e) {
