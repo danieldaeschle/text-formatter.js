@@ -1,5 +1,5 @@
 # TextFormatterJS
-### Descriptio
+### Description
 Simple text formatter tooltip for HTML editors
 
 ### Quickstart
