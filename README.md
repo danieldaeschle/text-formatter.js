@@ -1,7 +1,7 @@
 # TextFormatterJS
 Simple text formatter tooltip for HTML editors
 
-Download the files and copy ```text-formatter.min.js```, ```text-formatter.min.css``` and ```text-formatter.min.js.map``` into you project source directory.
+Download the files and copy ```text-formatter.min.js```, ```text-formatter.min.css``` from dist folder into your project source folder.
 Then you can add following to your ```<head></head>``` in your HTML file:
 ```
 <script src="text-formatter.min.js" charset="utf-8"></script>
