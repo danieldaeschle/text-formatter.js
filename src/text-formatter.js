@@ -1,6 +1,14 @@
+/**
+ * @file Main JS file for TextFormatterJS
+ * @author Daniel Däschle
+ */
+
+/** @type {boolean} */
 var textSelected = false;
+/** @type {boolean} */
 var isTextFormatterVisible = false;
-var textFormatterElement = '<div id="highlightTooltip">'+
+/** @const {string} */
+var textFormatterTooltipElement = '<div id="highlightTooltip">'+
                             '<button onclick="document.execCommand(\'bold\', false, null)"><i class="material-icons">format_bold</i></button>'+
                             '<button onclick="document.execCommand(\'italic\', false, null)"><i class="material-icons">format_italic</i></button>'+
                             '<button onclick="document.execCommand(\'underline\', false, null)"><i class="material-icons">format_underline</i></button>'+
@@ -8,15 +16,18 @@ var textFormatterElement = '<div id="highlightTooltip">'+
                             '<button onclick="changeSize(false)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_down</i></button>'+
                             '</div>'
 
+/**  Writes the required HTML DOM into the document */
 window.onload = (function() {
-    document.querySelector('body').innerHTML += textFormatterElement;
+    document.querySelector('body').innerHTML += textFormatterTooltipElement;
 });
 
+/** Toggles the textSelected variable when the highlighting/selection changes */
 document.onselectionchange = (function(e) {
     var text = getSelectedText();
     textSelected = true ? text !== '' : false;
 });
 
+/** Hides the highlightTooltip if the user clicks into the screen */
 document.onclick = (function(e) {
     var highlightTooltip = document.getElementById('highlightTooltip').outerHTML;
     if (highlightTooltip.indexOf(e.target.outerHTML) === -1 && isTextFormatterVisible) {
@@ -26,6 +37,7 @@ document.onclick = (function(e) {
     }
 });
 
+/** Shows the highlightTooltip on mouseup and keyup events and sets the tooltip to its position */
 document.onmouseup = document.onkeyup = (function() {
     if (textSelected) {
         var coords = getSelectionCoords();
@@ -39,20 +51,21 @@ document.onmouseup = document.onkeyup = (function() {
     }
 });
 
+/**
+ * Executes the fontSize command by adding/removing the size
+ * @param {boolean} increase
+ */
 var changeSize = (function(increase) {
     var fontSize = document.queryCommandValue("FontSize") || 3;
     value = parseInt(fontSize) + parseInt(increase ? 1 : -1);
     document.execCommand('fontSize', false, value);
 });
 
-var getElementIndex = (function(node) {
-    var index = 0;
-    while (node = node.previousElementSibling) {
-        index++;
-    }
-    return index;
-});
 
+/**
+ * Returns the highlighteed/selected text
+ * @returns {string}
+ */
 var getSelectedText = (function() {
     if (window.getSelection) {
         var selection = window.getSelection();
@@ -63,9 +76,12 @@ var getSelectedText = (function() {
     return '';
 });
 
-var getSelectionCoords = (function(win) {
-    win = win || window;
-    var doc = win.document;
+/**
+ * Returns the coordinates of the highlighted/selected text
+ * @returns {object} containing x and y
+ */
+var getSelectionCoords = (function() {
+    var doc = window.document;
     var sel = doc.selection, range, rects, rect;
     var x = 0, y = 0;
     if (sel) {
@@ -75,8 +91,8 @@ var getSelectionCoords = (function(win) {
             x = range.boundingLeft;
             y = range.boundingTop;
         }
-    } else if (win.getSelection) {
-        sel = win.getSelection();
+    } else if (window.getSelection) {
+        sel = window.getSelection();
         if (sel.rangeCount) {
             range = sel.getRangeAt(0).cloneRange();
             if (range.getClientRects) {
@@ -106,6 +122,12 @@ var getSelectionCoords = (function(win) {
     return { x: x, y: y };
 });
 
+/**
+ * Fade in animation for DOM objects
+ * @param {object} el
+ * @param {number} duration 
+ * @param {string} display 
+ */
 var fadeIn = (function(el, duration, display) {
     var s = el.style, step = 25/(duration || 300);
     s.opacity = s.opacity || 0;
@@ -113,6 +135,11 @@ var fadeIn = (function(el, duration, display) {
     (function fade() { (s.opacity = parseFloat(s.opacity)+step) > 1 ? s.opacity = 1 : setTimeout(fade, 25); })();
 });
 
+/**
+ * Fade out animation for DOM objects
+ * @param {object} el 
+ * @param {number} duration 
+ */
 var fadeOut = (function(el, duration) {
     var s = el.style, step = 25/(duration || 300);
     s.opacity = s.opacity || 1;
