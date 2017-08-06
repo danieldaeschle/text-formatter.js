@@ -8,6 +8,6 @@ Then you can add following to your ```<head></head>``` in your HTML file:
 <link href="text-formatter.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 ```
-to the head of your HTML document, and ```contenteditable="true"``` to your HTML element.
+Set ```contenteditable="true"``` property to your HTML element which should be editable and showing the tooltip.
 
 ![alt text](https://raw.githubusercontent.com/danieldaeschle/TextFormatterJS/master/images/screenshot.png)
