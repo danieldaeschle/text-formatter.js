@@ -28,7 +28,7 @@ document.onselectionchange = (function(e) {
 });
 
 /** Hides the highlightTooltip if the user clicks into the screen */
-document.onclick = (function(e) {
+document.onclick = document.onscroll = (function(e) {
     var highlightTooltip = document.getElementById('highlightTooltip').outerHTML;
     if (highlightTooltip.indexOf(e.target.outerHTML) === -1 && isTextFormatterVisible) {
         fadeOut(document.getElementById('highlightTooltip'), 200);
@@ -88,8 +88,7 @@ var getSelectedText = (function() {
  * @returns {object} containing x and y
  */
 var getSelectionCoords = (function() {
-    var doc = window.document;
-    var sel = doc.selection, range, rects, rect;
+    var sel = document.selection, range, rect;
     var x = 0, y = 0;
     if (sel) {
         if (sel.type !== "Control") {
@@ -104,19 +103,16 @@ var getSelectionCoords = (function() {
             range = sel.getRangeAt(0).cloneRange();
             if (range.getClientRects) {
                 range.collapse(true);
-                rects = range.getClientRects();
-                if (rects.length > 0) {
-                    rect = rects[0];
-                }
-                if (rect !== undefined) {
+                if (range.getClientRects().length>0){
+                    rect = range.getClientRects()[0];
                     x = rect.left;
                     y = rect.top;
                 }
             }
             if (x === 0 && y === 0) {
-                var span = doc.createElement("span");
+                var span = document.createElement("span");
                 if (span.getClientRects) {
-                    span.appendChild( doc.createTextNode("\u200b") );
+                    span.appendChild( document.createTextNode("\u200b") );
                     range.insertNode(span);
                     rect = span.getClientRects()[0];
                     x = rect.left;
