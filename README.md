@@ -12,8 +12,9 @@ Then you can add following to your ```<head></head>``` in your HTML file:
 ```
 Set ```contenteditable="true"``` property to your HTML element which should be editable and showing the tooltip.
 
-### Screenshots
+### Screenshots and Demo
 ![alt text](https://raw.githubusercontent.com/danieldaeschle/TextFormatterJS/master/images/screenshot.png)
+[Demo Site](https://danieldaeschle.github.io/TextFormatterJS/)
 
 ### Authors
 * Daniel Däschle
