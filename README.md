@@ -14,6 +14,7 @@ Set ```contenteditable="true"``` property to your HTML element which should be e
 
 ### Screenshots and Demo
 ![alt text](https://raw.githubusercontent.com/danieldaeschle/TextFormatterJS/master/images/screenshot.png)
+
 [Demo Site](https://danieldaeschle.github.io/TextFormatterJS/)
 
 ### Authors
