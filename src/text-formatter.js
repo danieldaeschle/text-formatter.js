@@ -5,6 +5,8 @@
 
 /** @type {boolean} */
 var textSelected = false;
+/** @type {number} */
+var delayedVisibleSetter = null;
 /** @type {boolean} */
 var isTextFormatterVisible = false;
 /** @const {string} */
@@ -25,15 +27,10 @@ window.onload = (function() {
 document.onselectionchange = (function(e) {
     var text = getSelectedText();
     textSelected = true ? text !== '' : false;
-});
 
-/** Hides the highlightTooltip if the user clicks into the screen */
-document.onclick = document.onscroll = (function(e) {
-    var highlightTooltip = document.getElementById('highlightTooltip').outerHTML;
-    if (highlightTooltip.indexOf(e.target.outerHTML) === -1 && isTextFormatterVisible && getSelectedText() === '') {
-        fadeOut(document.getElementById('highlightTooltip'), 200);
-        clearTimeout(delayedVisibleSetter);
-        isTextFormatterVisible = false;
+    /** Hides the tooltip if the text get unselected */
+    if (!textSelected) {
+        hideTooltip();
     }
 });
 
@@ -57,6 +54,15 @@ document.onmouseup = document.onkeyup = (function() {
             isTextFormatterVisible = true;
         }, 200);
     }
+});
+
+/** Hides the text formatter tooltip */
+var hideTooltip = (function() {
+    fadeOut(document.getElementById('highlightTooltip'), 200);
+    if (delayedVisibleSetter) {
+        clearTimeout(delayedVisibleSetter);
+    }
+    isTextFormatterVisible = false;
 });
 
 /**
