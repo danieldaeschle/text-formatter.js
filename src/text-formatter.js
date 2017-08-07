@@ -9,11 +9,11 @@ var textSelected = false;
 var isTextFormatterVisible = false;
 /** @const {string} */
 var textFormatterTooltipElement = '<div id="highlightTooltip">'+
-                                    '<button onclick="document.execCommand(\'bold\', false, null)"><i class="material-icons">format_bold</i></button>'+
-                                    '<button onclick="document.execCommand(\'italic\', false, null)"><i class="material-icons">format_italic</i></button>'+
-                                    '<button onclick="document.execCommand(\'underline\', false, null)"><i class="material-icons">format_underline</i></button>'+
-                                    '<button onclick="changeSize(true)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_up</i></button>'+
-                                    '<button onclick="changeSize(false)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_down</i></button>'+
+                                    '<button class="text-formatter-button" onclick="document.execCommand(\'bold\', false, null)"><i class="material-icons">format_bold</i></button>'+
+                                    '<button class="text-formatter-button" onclick="document.execCommand(\'italic\', false, null)"><i class="material-icons">format_italic</i></button>'+
+                                    '<button class="text-formatter-button" onclick="document.execCommand(\'underline\', false, null)"><i class="material-icons">format_underline</i></button>'+
+                                    '<button class="text-formatter-button" onclick="changeSize(true)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_up</i></button>'+
+                                    '<button class="text-formatter-button" onclick="changeSize(false)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_down</i></button>'+
                                     '</div>'
 
 /**  Writes the required HTML DOM into the document */

@@ -1,11 +1,13 @@
-button {
+.text-formatter-button {
     cursor: pointer;
     background-color: transparent;
-    border: 0; padding: 2px;
+    border: 0;
+    padding: 2px;
     color: white;
     border-radius: 2px;
+    height: 28px;
 }
-button:hover {
+.text-formatter-button:hover {
     background-color: #616161
 }
 #highlightTooltip {
@@ -15,4 +17,5 @@ button:hover {
     display: none;
     background-color: #212121;
     padding: 8px;
+    height: 44px;
 }
