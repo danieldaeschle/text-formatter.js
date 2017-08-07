@@ -1,4 +1,4 @@
-.text-formatter-button {
+#highlightTooltip .text-formatter-button {
     cursor: pointer;
     background-color: transparent;
     border: 0;
@@ -6,8 +6,9 @@
     color: white;
     border-radius: 2px;
     height: 28px;
+    width: 28px;
 }
-.text-formatter-button:hover {
+#highlightTooltip .text-formatter-button:hover {
     background-color: #616161
 }
 #highlightTooltip {
@@ -19,3 +20,7 @@
     padding: 8px;
     height: 44px;
 }
+#highlightTooltip .material-icons.md-18 { font-size: 18px; line-height: 24px; }
+#highlightTooltip .material-icons.md-24 { font-size: 24px; }
+#highlightTooltip .material-icons.md-36 { font-size: 36px; }
+#highlightTooltip .material-icons.md-48 { font-size: 48px; }

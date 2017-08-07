@@ -14,8 +14,8 @@ var textFormatterTooltipElement = '<div id="highlightTooltip">'+
                                     '<button class="text-formatter-button" onclick="document.execCommand(\'bold\', false, null)"><i class="material-icons">format_bold</i></button>'+
                                     '<button class="text-formatter-button" onclick="document.execCommand(\'italic\', false, null)"><i class="material-icons">format_italic</i></button>'+
                                     '<button class="text-formatter-button" onclick="document.execCommand(\'underline\', false, null)"><i class="material-icons">format_underline</i></button>'+
-                                    '<button class="text-formatter-button" onclick="changeSize(true)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_up</i></button>'+
-                                    '<button class="text-formatter-button" onclick="changeSize(false)"><i class="material-icons">format_size</i><i class="material-icons">arrow_drop_down</i></button>'+
+                                    '<button class="text-formatter-button" onclick="changeSize(false)"><i style="padding: 3px" class="material-icons md-18">format_size</i></button>'+
+                                    '<button class="text-formatter-button" onclick="changeSize(true)"><i class="material-icons">format_size</i></button>'+
                                     '</div>'
 
 /**  Writes the required HTML DOM into the document */
@@ -29,7 +29,7 @@ document.onselectionchange = (function(e) {
     textSelected = true ? text !== '' : false;
 
     /** Hides the tooltip if the text get unselected */
-    if (!textSelected) {
+    if (!textSelected && isTextFormatterVisible) {
         hideTooltip();
     }
 });
