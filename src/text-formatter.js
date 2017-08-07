@@ -30,7 +30,7 @@ document.onselectionchange = (function(e) {
 /** Hides the highlightTooltip if the user clicks into the screen */
 document.onclick = document.onscroll = (function(e) {
     var highlightTooltip = document.getElementById('highlightTooltip').outerHTML;
-    if (highlightTooltip.indexOf(e.target.outerHTML) === -1 && isTextFormatterVisible) {
+    if (highlightTooltip.indexOf(e.target.outerHTML) === -1 && isTextFormatterVisible && getSelectedText() === '') {
         fadeOut(document.getElementById('highlightTooltip'), 200);
         clearTimeout(delayedVisibleSetter);
         isTextFormatterVisible = false;
