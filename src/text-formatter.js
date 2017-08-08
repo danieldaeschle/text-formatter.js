@@ -9,6 +9,8 @@ var textSelected = false;
 var delayedVisibleSetter = null;
 /** @type {boolean} */
 var isTextFormatterVisible = false;
+/** @type {boolean} */
+var fadingIn = false;
 /** @const {string} */
 var textFormatterTooltipElement = '<div id="highlightTooltip">'+
                                     '<button class="text-formatter-button" onclick="document.execCommand(\'bold\', false, null)"><i class="material-icons">format_bold</i></button>'+
@@ -52,16 +54,16 @@ document.onmouseup = document.onkeyup = (function() {
         fadeIn(document.getElementById('highlightTooltip'), 200);
         delayedVisibleSetter = setTimeout(function() {
             isTextFormatterVisible = true;
-        }, 200);
+        }, 50);
     }
 });
 
 /** Hides the text formatter tooltip */
 var hideTooltip = (function() {
-    fadeOut(document.getElementById('highlightTooltip'), 200);
     if (delayedVisibleSetter) {
         clearTimeout(delayedVisibleSetter);
     }
+    fadeOut(document.getElementById('highlightTooltip'), 200);
     isTextFormatterVisible = false;
 });
 
@@ -139,11 +141,19 @@ var getSelectionCoords = (function() {
  * @param {number} duration 
  * @param {string} display 
  */
-var fadeIn = (function(el, duration, display) {
-    var s = el.style, step = 25/(duration || 300);
+var fadeIn = (function(el, duration) {
+    var s = el.style, step = 25 / (duration || 300);
     s.opacity = s.opacity || 0;
-    s.display = display || "block";
-    (function fade() { (s.opacity = parseFloat(s.opacity)+step) > 1 ? s.opacity = 1 : setTimeout(fade, 25); })();
+    s.display = 'block';
+    fadingIn = true;
+    (function fade() {
+        if ((s.opacity = parseFloat(s.opacity) + step) > 1) {
+            s.opacity = 1;
+            fadingIn = false;
+        } else {
+            setTimeout(fade, 25);
+        }
+    })();
 });
 
 /**
@@ -154,5 +164,9 @@ var fadeIn = (function(el, duration, display) {
 var fadeOut = (function(el, duration) {
     var s = el.style, step = 25/(duration || 300);
     s.opacity = s.opacity || 1;
-    (function fade() { (s.opacity -= step) < 0 ? s.display = "none" : setTimeout(fade, 25); })();
+    (function fade() {
+        if (!fadingIn) {
+            (s.opacity -= step) < 0 ? s.display = 'none' : setTimeout(fade, 25);
+        }
+    })();
 });
