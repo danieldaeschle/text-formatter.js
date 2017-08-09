@@ -60,7 +60,7 @@
         }
     });
 
-    /** Shows the highlightTooltip on mouseup and keyup events and sets the tooltip to its position */
+    /** Shows the highlightTooltip on mouseUp and keyUp events and sets the tooltip to its position */
     document.onmouseup = document.onkeyup = (function() {
         if (textSelected) {
             var coordinates = getSelectionCoordinates();
@@ -102,7 +102,7 @@
     });
 
     /**
-     * Returns the highlighteed/selected text
+     * Returns the highlighted/selected text
      * @returns {string}
      */
     var getSelectedText = (function() {
