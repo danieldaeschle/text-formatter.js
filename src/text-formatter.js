@@ -7,7 +7,7 @@
  (function() {
     /** @type {boolean} */
     var textSelected = false;
-    /** @type {number} */
+    /** @type {number | null} */
     var delayedVisibleSetter = null;
     /** @type {boolean} */
     var isTextFormatterVisible = false;
@@ -15,22 +15,44 @@
     var fadingIn = false;
     /** @const {string} */
     var textFormatterTooltipElement = '<div id="highlightTooltip">'+
-                                        '<button class="text-formatter-button" onclick="document.execCommand(\'bold\', false, null)"><i class="material-icons">format_bold</i></button>'+
-                                        '<button class="text-formatter-button" onclick="document.execCommand(\'italic\', false, null)"><i class="material-icons">format_italic</i></button>'+
-                                        '<button class="text-formatter-button" onclick="document.execCommand(\'underline\', false, null)"><i class="material-icons">format_underline</i></button>'+
-                                        '<button class="text-formatter-button" onclick="changeSize(false)"><i style="padding: 3px" class="material-icons md-18">format_size</i></button>'+
-                                        '<button class="text-formatter-button" onclick="changeSize(true)"><i class="material-icons">format_size</i></button>'+
-                                        '</div>'
+                                        '<button class="text-formatter-button" id="formatBoldButton"><i class="material-icons">format_bold</i></button>'+
+                                        '<button class="text-formatter-button" id="formatItalicButton"><i class="material-icons">format_italic</i></button>'+
+                                        '<button class="text-formatter-button" id="formatUnderlineButton"><i class="material-icons">format_underline</i></button>'+
+                                        '<button class="text-formatter-button" id="fontSizeDownButton"><i style="padding: 3px" class="material-icons md-18">format_size</i></button>'+
+                                        '<button class="text-formatter-button" id="fontSizeUpButton"><i class="material-icons">format_size</i></button>'+
+                                        '</div>';
 
     /**  Writes the required HTML DOM into the document */
     window.onload = (function() {
         document.querySelector('body').innerHTML += textFormatterTooltipElement;
+
+        var formatBoldButton = document.getElementById('formatBoldButton');
+        var formatItalicButton = document.getElementById('formatItalicButton');
+        var formatUnderlineButton = document.getElementById('formatItalicButton');
+        var fontSizeDownButton = document.getElementById('fontSizeDownButton');
+        var fontSizeUpButton = document.getElementById('fontSizeUpButton');
+
+        formatBoldButton.onclick = (function() {
+            document.execCommand('bold', false, null);
+        });
+        formatItalicButton.onclick = (function() {
+            document.execCommand('italic', false, null);
+        });
+        formatUnderlineButton.onclick = (function() {
+            document.execCommand('underline', false, null);
+        });
+        fontSizeDownButton.onclick = (function() {
+            changeSize(false);
+        });
+        fontSizeUpButton.onclick = (function() {
+            changeSize(true);
+        });
     });
 
     /** Toggles the textSelected variable when the highlighting/selection changes */
-    document.onselectionchange = (function(e) {
+    document.onselectionchange = (function() {
         var text = getSelectedText();
-        textSelected = true ? text !== '' : false;
+        textSelected = text !== '';
 
         /** Hides the tooltip if the text get unselected */
         if (!textSelected && isTextFormatterVisible) {
@@ -41,17 +63,17 @@
     /** Shows the highlightTooltip on mouseup and keyup events and sets the tooltip to its position */
     document.onmouseup = document.onkeyup = (function() {
         if (textSelected) {
-            var coords = getSelectionCoords();
+            var coordinates = getSelectionCoordinates();
             var highlightTooltip = document.getElementById('highlightTooltip');
-            if (coords.y > 60) {
-                highlightTooltip.style.top = coords.y - 55 + 'px';
+            if (coordinates.y > 60) {
+                highlightTooltip.style.top = coordinates.y - 55 + 'px';
             } else {
-                highlightTooltip.style.top = coords.y + 25 + 'px';
+                highlightTooltip.style.top = coordinates.y + 25 + 'px';
             }
-            if (coords.x < 55) {
+            if (coordinates.x < 55) {
                 highlightTooltip.style.left = 5 + 'px';
             } else {
-                highlightTooltip.style.left = coords.x - 50 + 'px';
+                highlightTooltip.style.left = coordinates.x - 50 + 'px';
             }
             fadeIn(document.getElementById('highlightTooltip'), 200);
             delayedVisibleSetter = setTimeout(function() {
@@ -74,8 +96,8 @@
      * @param {boolean} increase
      */
     var changeSize = (function(increase) {
-        var fontSize = document.queryCommandValue("FontSize") || 3;
-        value = parseInt(fontSize) + parseInt(increase ? 1 : -1);
+        var fontSize = document.queryCommandValue("fontSize") || 3;
+        var value = parseInt(fontSize) + parseInt(increase ? 1 : -1);
         document.execCommand('fontSize', false, value);
     });
 
@@ -97,7 +119,7 @@
      * Returns the coordinates of the highlighted/selected text
      * @returns {object} containing x and y
      */
-    var getSelectionCoords = (function() {
+    var getSelectionCoordinates = (function() {
         var sel = document.selection, range, rect;
         var x = 0, y = 0;
         if (sel) {
