@@ -1,4 +1,4 @@
-# TextFormatterJS
+# text-formatter.js
 ### Description
 Simple text formatter tooltip for web editors
 
