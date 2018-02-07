@@ -15,7 +15,7 @@ Set ```contenteditable="true"``` property to your element (e.g. ```<div contente
 ### Screenshots and Demo
 ![alt text](https://raw.githubusercontent.com/danieldaeschle/TextFormatterJS/master/images/screenshot.png)
 
-[Demo Site](https://danieldaeschle.github.io/TextFormatterJS/)
+[Demo Site](https://danieldaeschle.github.io/text-formatter.js/)
 
 ### Authors
 * Daniel Däschle
